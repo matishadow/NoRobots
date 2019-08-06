@@ -6,27 +6,33 @@ import java.util.ArrayList;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AccountsResponse {
-    public String status;
     public AccountsResponseData data;
+    private String status;
 }
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 class AccountsResponseData {
-     AccountTypes accts;
+    public Accts accts;
 }
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-class AccountTypes {
-    public CurrentAccounts cur;
+class Accts {
+    public Cur cur;
 }
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-class CurrentAccounts {
-    public ArrayList<CurrentAccount> accts;
+class Cur {
+    public ArrayList < Account > accts = new ArrayList < Account > ();
 }
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-class CurrentAccount {
+class Account {
     public String acct;
-    public String plnbal;
+    public String atrs;
+    public  float avbal;
+    public String curr;
+    public String name;
+    public float plnbal;
+    public String type;
+    public String visible;
 }

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultConnectionKeepAliveStrategy;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import java.io.UnsupportedEncodingException;
@@ -25,7 +26,7 @@ public class Main {
         final var accountsUrl = "https://login.ingbank.pl/mojeing/rest/rengetallingprds";
         var login = getLogin();
         var password = getPassword();
-        var httpClient = HttpClients.createDefault();
+        var httpClient = HttpClients.custom().setKeepAliveStrategy(DefaultConnectionKeepAliveStrategy.INSTANCE).build();
 
         var loginPayload = convertObjectToStringEntity(createLoginPayload(login));
         var httpPost = createHttpPost(loginUrl, loginPayload);
@@ -43,14 +44,13 @@ public class Main {
         responseJson = EntityUtils.toString(entity);
         var passwordResponse = new ObjectMapper().readValue(responseJson, PasswordResponse.class);
 
-        var accountsPayload = convertObjectToStringEntity(new GenericPayload(passwordResponse.data.token, "", "PL"));
+        var accountsPayload = convertObjectToStringEntity(new GenericPayload(passwordResponse.data.token, "PL", ""));
         httpPost = createHttpPost(accountsUrl, accountsPayload);
+
         response = httpClient.execute(httpPost);
         entity = response.getEntity();
         responseJson = EntityUtils.toString(entity);
         var accountsResponse = new ObjectMapper().readValue(responseJson, AccountsResponse.class);
-
-        entity = response.getEntity();
     }
 
     static LoginPayload createLoginPayload(String login) throws JsonProcessingException, UnsupportedEncodingException {
@@ -76,6 +76,8 @@ public class Main {
         var httpPost = new HttpPost(url);
         httpPost.addHeader("content-type", "application/json");
         httpPost.addHeader("connection", "keep-alive");
+        httpPost.addHeader("cookies_accepted", "true");
+        httpPost.addHeader("X-Wolf-Protection", "0.5259627313757991");
         httpPost.setEntity(object);
 
         return httpPost;
@@ -97,8 +99,8 @@ public class Main {
 
     static String createSha1Hmac(String key, String message) throws InvalidKeyException, NoSuchAlgorithmException {
         final String hmacName = "HmacSHA1";
-        Mac sha1Hmac = null;
-        String result = null;
+        Mac sha1Hmac;
+        String result;
 
         byte[] byteKey = key.getBytes(StandardCharsets.UTF_8);
         sha1Hmac = Mac.getInstance(hmacName);
