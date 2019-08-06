@@ -1,4 +1,4 @@
-package com.norobots;
+package com.norobots.pocos;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -6,10 +6,5 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class PasswordResponse {
     public PasswordResponseData data;
     public String status;
-}
-
-@JsonIgnoreProperties(ignoreUnknown = true)
-class PasswordResponseData {
-    public String token;
 }
 

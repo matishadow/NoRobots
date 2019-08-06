@@ -1,4 +1,4 @@
-package com.norobots;
+package com.norobots.pocos;
 
 public class GenericPayload {
     public String token;
