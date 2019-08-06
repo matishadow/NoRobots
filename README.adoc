@@ -1,16 +1,2 @@
 = NoRobots
 Simple bank scraper
-
-== Challenge
-We kindly ask you to develop on your own a very small project outlined below.
-Develop a console program that signs in to your personal bank account and prints a list of your accounts with their respective balances. 
-A program should use the very same protocol and interface a web browser uses - the HTTPS. 
-This method is called screen-scraping or web-scraping.
-
-* Simple console program, no need for a GUI
-* Written in Java
-* Should work correctly at least for your own bank account
-* Choose any bank you have access to
-* You can use any libraries you need but no headless browsers are allowed
-* Code quality is equally important as correctness. Please aim to write the most beautiful code possible.
-* Keep it simple. This is meant to be a small project and should take you something between several hours and several days at max.
