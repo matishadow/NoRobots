@@ -1,0 +1,4 @@
+== password name
+pwdhash
+
+== how hash is created
