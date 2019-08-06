@@ -1,23 +1,18 @@
 package com.norobots;
 
-public class LoginPayload {
-    public String token;
-    public String locale;
-    public String trace;
-    public LoginData data;
+public class LoginPayload extends GenericPayload{
+    public LoginPayloadData data;
 
-    public LoginPayload(String token, String locale, String trace, LoginData data) {
-        this.token = token;
-        this.locale = locale;
-        this.trace = trace;
+    public LoginPayload(String token, String locale, String trace, LoginPayloadData data) {
+        super(token, locale, trace);
         this.data = data;
     }
 }
 
-class LoginData {
+class LoginPayloadData {
     public String login;
 
-    public LoginData(String login) {
+    public LoginPayloadData(String login) {
         this.login = login;
     }
 }
